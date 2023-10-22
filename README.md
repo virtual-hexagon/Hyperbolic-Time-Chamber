@@ -11,10 +11,11 @@ A personal training ground to study, learn and improve at all the things 🐱‍
 
 ## Project Structure
 
-| Files & Folders  | Description                                    |
-| -------          | ------------------------------------------     |
-| assets           | Contains top level assets for project and docs |
-| demos            | Fancy demonstrations. Hopefully they look cool |
-| examples         | Applied examples diving deeper into topics     |
-| notes            | Domain specific notes                          |
-| README.md        | Describe the project                           |
+| Files & Folders  | Description                                                                     |
+| ---------------- | ------------------------------------------------------------------------------- |
+| assets           | Contains top level assets for project and docs                                  |
+| demos            | Fancy demonstrations. Hopefully they look cool                                  |
+| examples         | Distilled examples. Intended to be simpler and more concise than full exercises |
+| exercises        | Applied exercise diving deeper into topics                                      |
+| notes            | Domain specific notes                                                           |
+| README.md        | Describe the project                                                            |
