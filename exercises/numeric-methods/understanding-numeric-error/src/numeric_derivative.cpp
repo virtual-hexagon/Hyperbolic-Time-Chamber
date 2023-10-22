@@ -23,19 +23,20 @@ double derivFx ( const double &x ){
 
 int main() {
     // Define the value of x @ which we want to approximate f'(x)
-    double x = 3.9;
+    const double x = 3.9;
 
     // Define the range [-1, 25]. 
     // we will use a step size of 1 for simplicity.
     // Notes:
     // - the size of the range is 27= 25-(-1) + 1 to account for zero
     // - iota generates a linear space with step size 1. For more complex behavior use std::generate    std::array<int, 27> powers;
-    std::array<double, 27> powers;
+    const int data_size_ = 27;
+    std::array<double, data_size_> powers;
     std::iota(powers.begin(), powers.end(), -1);
 
     // Generate an array of different grid spacings
     // using a base of 2 and each exponent in the powers array
-    std::array<double, 27> grids;
+    std::array<double, data_size_> grids;
 
     // Note that the transform is comparable to:
     //>`std::copy(powers.begin(),powers.end(),grids.begin());`
@@ -58,9 +59,9 @@ int main() {
     auto centralDiff4   = grids | std::ranges::views::transform(centralDiff4Fun);
 
     // Compute the error by taking the difference between the analytic solution and the approximation
-    std::array<double, 27> forwardDiffError;
-    std::array<double, 27> centralDiffError;
-    std::array<double, 27> centralDiff4Error;
+    std::array<double, data_size_> forwardDiffError;
+    std::array<double, data_size_> centralDiffError;
+    std::array<double, data_size_> centralDiff4Error;
 
     std::ranges::transform(trueDerivative, forwardDiff,  forwardDiffError.begin(), std::minus{});
     std::ranges::transform(trueDerivative, centralDiff,  centralDiffError.begin(), std::minus{});
