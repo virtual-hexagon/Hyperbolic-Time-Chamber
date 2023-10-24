@@ -78,6 +78,8 @@
         "fstream": "cpp"
     },
     "cSpell.words": [
-        "Scientia"
+        "Scientia",
+        "xlabel",
+        "ylabel"
     ]
 }

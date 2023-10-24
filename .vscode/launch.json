@@ -2,6 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${fileDirname}"
+        },
+        {
             "name": "C/C++: cl.exe build and debug active file",
             "type": "cppvsdbg",
             "request": "launch",
@@ -12,6 +21,6 @@
             "environment": [],
             "console": "integratedTerminal",
             "preLaunchTask": "C/C++: cl.exe build active file"
-        }
+        },
     ]
 }
