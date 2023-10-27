@@ -75,7 +75,8 @@
         "valarray": "cpp",
         "xhash": "cpp",
         "xtree": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "random": "cpp"
     },
     "cSpell.words": [
         "Scientia",
