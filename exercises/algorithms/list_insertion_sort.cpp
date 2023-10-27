@@ -66,7 +66,7 @@ class Single_Link_List {
             ++size;
         }
 
-        void insert(int pos , value_type value){
+        void insert(size_t index , value_type value){
             // create some working pointers
             // Notes:
             // - Set the current node to the head.
@@ -82,7 +82,7 @@ class Single_Link_List {
             };
 
             // Iterate to the desired index in the list
-            for(int i = 0; i < pos; ++i){
+            for(size_t i = 0; i < index; ++i){
                 pre = cur;
                 cur = cur->next;
             }
@@ -95,7 +95,7 @@ class Single_Link_List {
             ++size;
         }
 
-        void remove(int pos){
+        void remove(size_t index){
             // create some working pointers
             // Notes:
             // - Set the current node to the head.
@@ -106,7 +106,7 @@ class Single_Link_List {
             cur = head;
 
             // Iterate to the desired index in the list
-            for(int i = 0; i < pos; ++i){
+            for(size_t i = 0; i < index; ++i){
                 pre = cur;
                 cur = cur->next;
             }
@@ -148,8 +148,12 @@ class Single_Link_List {
             Node* dummy = new Node;
             Node* s = new Node;
 
-            dummy->next = head;
+            Node* insert = new Node;
+            insert->data = val;
 
+            dummy->next = insert;
+            insert->next = head;
+            
             // Drain the list from dummy until only dummy remains
             while(dummy->next != nullptr) {
                 //save node right after head
@@ -206,7 +210,7 @@ int main() {
     Single_Link_List<int> list;
 
     std::cout << "Inserting nodes ..." << std::endl;
-    for(int i=0; i<10; ++i){
+    for(auto i=0; i<10; ++i){
         list.insert_back(dist(rng));
     }
 
