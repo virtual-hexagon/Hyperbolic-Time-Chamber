@@ -1,15 +1,16 @@
 #include <iostream>
+#include <exception>
+#include <string>
 #include <random>
 
 template<class T>
 class Single_Link_List {
 
-    //C++11 create a type alias 
+    //C++11 create a type alias to prevent us having to typedef a bunch of stuff
     using value_type = T;
     using pointer_type = T*;
     using size_type = size_t;
     using reference = value_type&;
-    typedef std::size_t size_type;
     
     private:
         struct Node {
@@ -67,11 +68,20 @@ class Single_Link_List {
         }
 
         void insert(size_t index , value_type value){
-            // create some working pointers
             // Notes:
-            // - Set the current node to the head.
+            // - Check if we are trying to insert the node out of bounds
+            // - Create pointers to track prior and current node as we iterate through list
+            // - Create a temporary node to insert at the desired index.
             // - We will insert the new node in front of the "current" node
             // - Create a temporary node that we plan to insert
+            if(index > size){
+                std::string msg = "Trying to insert at index beyond the end of the list. List Size: "
+                    + std::to_string(size)
+                    + " Index: "
+                    + std::to_string(index);
+                throw std::range_error(msg);
+            }
+
             Node* pre = new Node;
             Node* cur = new Node;
             cur = head;
@@ -96,29 +106,44 @@ class Single_Link_List {
         }
 
         void remove(size_t index){
-            // create some working pointers
             // Notes:
-            // - Set the current node to the head.
-            // - We will remove the node where its found
-            // - Create a temporary node that we plan to use to track pointers. No danglers
+            // - Create some working pointers to track iterations through the list
+            // - Set the current working node to the head.
+            // - We will remove the node where its found in the list
             Node* pre = new Node;
             Node* cur = new Node;
             cur = head;
 
-            // Iterate to the desired index in the list
-            for(size_t i = 0; i < index; ++i){
-                pre = cur;
-                cur = cur->next;
-            }
-            
             // save the pointer to the object we are going to delete
             // so we can clean it up! Dont leak memory.
-            Node* to_delete = cur;
-
-            // update the prior nodes pointer to point
-            // to the next node from the current node
-            pre->next = cur->next;
+            Node* to_delete = new Node;
             
+            // Notes:
+            // - Bounds check and make sure we are not trying to remove beyond the size of the list.
+            // - Check if the head and tail point to the same element. That means we are removing our last element.
+            // - Check if we are removing from the front and the next pointer isn't null and handle that edge case.
+            // - Otherwise iterate through list. Track the prior node and current node so we can link "over" the 
+            //   node we want to remove.
+            if( index > size){
+                std::string msg = "Trying to remove index beyond the end of the list. List Size: "
+                    + std::to_string(size)
+                    + " Index: "
+                    + std::to_string(index);
+                throw std::range_error(msg);
+            }else if(head == tail){
+                head->data = T();
+                head->next = nullptr;
+            }else if(index == 0){
+                to_delete = head;
+                head = head->next;
+            }
+            else{
+                for(int i = 0; i < index; ++i){
+                    pre = cur;
+                    cur = cur->next;
+                }
+                pre->next = cur->next;
+            }   
             --size;
             delete to_delete;
         }
