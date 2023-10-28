@@ -141,6 +141,7 @@ class Single_Link_List {
     
         void display(){
             Node* temp = head;
+            if(size == 0){ return; }
             while(temp != nullptr){
                 // handle pretty printing. no trailing comma!
                 if(temp->next == nullptr){
