@@ -225,6 +225,7 @@ int main() {
     
     std::cout << std::endl << "Draining nodes ..." << std::endl;
     auto list_size = list.getSize();
+    list.display();
     while( list_size > 0 ){
         list.remove(0);
         list_size = list.getSize();
