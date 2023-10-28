@@ -36,30 +36,33 @@ class Single_Link_List {
         size_type getSize(){ return size; }
 
         void insert_back(value_type value){
-            Node* temp = new Node();
-            temp->data = value;
-            
+            // Notes:
+            // - Caution manual allocation of memory with `new`! 
+            //   Be careful to clean up or we leak memory
+            Node* to_insert = new Node();
+            to_insert->data = value;
             if(head == nullptr){
-                head = temp;
-                tail = temp;
+                head = to_insert;
+                tail = to_insert;
             } else {
-                tail->next = temp;
-                tail = temp;
+                tail->next = to_insert;
+                tail = to_insert;
             }
-
             ++size;
         }
 
         void insert_front(value_type value){
-            Node* temp = new Node;
-            temp->data = value;
-
+            // Notes:
+            // - Caution manual allocation of memory with `new`! 
+            //   Be careful to clean up or we leak memory
+            Node* to_insert = new Node;
+            to_insert->data = value;
             if(head == nullptr){
-                head = temp;
-                tail = temp;
+                head = to_insert;
+                tail = to_insert;
             } else {
-                temp->next = head;
-                head = temp;
+                to_insert->next = head;
+                head = to_insert;
             }
             ++size;
         }
@@ -70,7 +73,7 @@ class Single_Link_List {
             // - Create pointers to track prior and current node as we iterate through list
             // - Create a temporary node to insert at the desired index.
             // - We will insert the new node in front of the "current" node
-            // - Create a temporary node that we plan to insert
+            // - Create a node that we plan to insert using manual memory allocation via `new`
             if(index > size){
                 std::string msg = "Trying to insert at index beyond the end of the list. List Size: "
                     + std::to_string(size)
@@ -79,12 +82,10 @@ class Single_Link_List {
                 throw std::range_error(msg);
             }
 
-            Node* pre = new Node;
-            Node* cur = new Node;
-            cur = head;
-
-            Node* temp = new Node;
-            temp->data = value;
+            Node* pre = nullptr;
+            Node* cur = head;
+            Node* to_insert = new Node;
+            to_insert->data = value;
 
             // Iterate to the desired index in the list
             for(size_t i = 0; i < index; ++i){
@@ -94,31 +95,26 @@ class Single_Link_List {
             
             // link our new node to same location as the pre node points to
             // link the prior node to our new node
-            temp->next = pre->next;
-            pre->next  = temp;
-        
+            to_insert->next = pre->next;
+            pre->next  = to_insert;
             ++size;
         }
 
         void remove(size_t index){
             // Notes:
             // - Create some working pointers to track iterations through the list
-            // - Set the current working node to the head.
-            // - We will remove the node where its found in the list
-            Node* pre = new Node;
-            Node* cur = new Node;
-            cur = head;
+            // - Set the current working pointer to the head node
+            Node* to_delete = nullptr;
+            Node* pre = nullptr;
+            Node* cur = head;
 
-            // save the pointer to the object we are going to delete
-            // so we can clean it up! Dont leak memory.
-            Node* to_delete = new Node;
-            
             // Notes:
             // - Bounds check and make sure we are not trying to remove beyond the size of the list.
             // - Check if the head and tail point to the same element. That means we are removing our last element.
             // - Check if we are removing from the front and the next pointer isn't null and handle that edge case.
             // - Otherwise iterate through list. Track the prior node and current node so we can link "over" the 
             //   node we want to remove.
+            // - Clean up our manual memory allocation by using delete keyword on removed node
             if( index > size){
                 std::string msg = "Trying to remove index beyond the end of the list. List Size: "
                     + std::to_string(size)
@@ -144,22 +140,16 @@ class Single_Link_List {
         }
     
         void display(){
-            Node* temp = new Node;
-            temp = head;
+            Node* temp = head;
             while(temp != nullptr){
-
                 // handle pretty printing. no trailing comma!
                 if(temp->next == nullptr){
                     std::cout << temp->data << std::endl;
                 } else {
                     std::cout << temp->data << ", ";
                 }
-
-                // advance to next node
                 temp = temp->next;
             }
-            
-            delete temp;
         }
 };
 
